@@ -1,289 +1,204 @@
-Web Security Auditor – Scanner de Segurança Web em Node.js
+::: {align="center"}
+# 🛡️ Web Security Auditor
 
-Ferramenta desenvolvida para varredura automatizada não intrusiva de segurança em aplicações web, com foco em:
+### Scanner Automatizado de Segurança Web em Node.js
 
-configurações de segurança,
+![Node.js](https://img.shields.io/badge/Node.js-18%2B-green)
+![Security](https://img.shields.io/badge/Security-OWASP%20Aligned-red)
+![Status](https://img.shields.io/badge/Status-Em%20Desenvolvimento-yellow)
+![License](https://img.shields.io/badge/Uso-Interno%20Educacional-blue)
 
-certificados TLS,
+Ferramenta para **auditoria automatizada não intrusiva de aplicações
+web**, com geração de relatórios profissionais em **HTML**.
+:::
 
-cabeçalhos HTTP,
+------------------------------------------------------------------------
 
-exposição de endpoints sensíveis,
+## 🎯 Objetivo do Projeto
 
-classificação automática de risco,
+Este projeto foi criado para apoiar:
 
-geração de relatórios técnicos em HTML.
+-   ✅ Equipes de **Cibersegurança**
+-   ✅ **GTIC / Governança de TI**
+-   ✅ Auditorias internas
+-   ✅ Gestão de contratos de sistemas terceirizados
 
-⚠️ Uso exclusivo em sistemas próprios ou com autorização formal.
+O foco da ferramenta é a **análise passiva de exposição externa**, sem
+execução de ataques, exploits ou testes invasivos.
 
-📌 1. Objetivo do Projeto
+------------------------------------------------------------------------
 
-Este projeto tem como objetivo apoiar:
+## 🧠 O que a Ferramenta Faz
 
-equipes de Cibersegurança,
+-   🔎 Verifica conectividade HTTP
+-   🔐 Analisa certificado digital TLS/HTTPS
+-   🧱 Avalia cabeçalhos de segurança
+-   🚪 Enumera caminhos sensíveis públicos
+-   📊 Gera **score automático de risco**
+-   📄 Produz **relatório técnico em HTML**
+-   📌 Mapeia falhas com base na **OWASP Top 10**
 
-GTIC,
+------------------------------------------------------------------------
 
-gestores de contratos terceirizados,
+## 🏗️ Arquitetura do Projeto
 
-auditorias internas,
-
-na identificação rápida de riscos de exposição externa, sem realizar qualquer tipo de ataque, exploração ativa ou técnica invasiva.
-
-A ferramenta atua apenas com:
-
-requisições HTTP/HTTPS,
-
-verificação de certificados,
-
-enumeração passiva de caminhos públicos.
-
-🧱 2. Arquitetura da Aplicação
-
-O sistema é modular, cada parte com uma responsabilidade clara:
-
+``` text
 web-security-auditor/
 ├── src/
-│   ├── index.js                # Scan unitário
-│   ├── batchScan.js            # Scan em lote (várias URLs)
-│   ├── httpClient.js           # Cliente HTTP
-│   ├── headerScanner.js        # Análise de cabeçalhos de segurança
-│   ├── tlsScanner.js           # Análise de certificado TLS
-│   ├── sensitivePathsScanner.js # Enumeração de caminhos sensíveis
-│   ├── riskScorer.js           # Cálculo automático de score de risco
-│   ├── reportGenerator.js      # Geração de relatório HTML
-├── reports/                    # Relatórios gerados
-├── urls.txt                    # Lista de URLs para varredura em lote
+│   ├── index.js                 # Scan unitário
+│   ├── batchScan.js             # Scan em lote
+│   ├── httpClient.js            # Cliente HTTP
+│   ├── headerScanner.js         # Análise de headers
+│   ├── tlsScanner.js            # Certificado TLS
+│   ├── sensitivePathsScanner.js# Caminhos sensíveis
+│   ├── riskScorer.js            # Score de risco
+│   ├── reportGenerator.js       # Relatório HTML
+│
+├── reports/                     # Relatórios gerados
+├── urls.txt                     # URLs para varredura em lote
 ├── package.json
 └── README.md
+```
 
-⚙️ 3. Tecnologias Utilizadas
+------------------------------------------------------------------------
 
-Node.js 18+
+## ⚙️ Tecnologias Utilizadas
 
-Axios – Requisições HTTP
+-   💻 **Node.js 18+**
+-   🌐 **Axios**
+-   🔒 **TLS nativo do Node**
+-   📁 **File System (fs)**
+-   🎨 **HTML + CSS puro**
+-   📚 **OWASP Top 10**
 
-TLS nativo do Node – Análise de certificados
+------------------------------------------------------------------------
 
-File System (fs) – Geração de relatórios
+## 🚀 Instalação
 
-HTML + CSS puro – Relatório visual
+### Pré-requisitos
 
-Metodologia OWASP Top 10 – Base para classificação de riscos
+-   Node.js 18 ou superior
+-   Acesso à internet
+-   Autorização formal para testes nos sistemas
 
-🚀 4. Instalação do Projeto
-4.1 Pré-requisitos
+### Instalação
 
-Node.js instalado (versão 18 ou superior)
-
-Acesso à internet (para escanear URLs públicas)
-
-Permissão formal para auditoria dos sistemas testados
-
-4.2 Instalação
-
-Na raiz do projeto:
-
+``` bash
 npm install
+```
 
-▶️ 5. Como Executar
-🔹 5.1 Scan Unitário (1 URL)
+------------------------------------------------------------------------
+
+## ▶️ Como Executar
+
+### 🔹 Scan de uma única URL
+
+``` bash
 npm run scan -- https://exemplo.com.br
+```
 
+------------------------------------------------------------------------
 
-Resultado:
+### 🔹 Scan em Lote (várias URLs)
 
-Exibe relatório no terminal
+1.  Edite o arquivo `urls.txt`:
 
-Pode gerar JSON (se configurado)
-
-🔹 5.2 Scan em Lote (múltiplas URLs)
-
-Criar o arquivo urls.txt:
-
+``` txt
 https://www.hemobras.gov.br
 https://portal.hemobras.gov.br
 https://api.hemobras.gov.br
+```
 
+2.  Execute:
 
-Executar:
-
+``` bash
 npm run scan:batch
+```
 
+3.  Relatórios gerados em:
 
-Relatórios gerados em:
-
+``` text
 /reports/*.html
+```
 
+------------------------------------------------------------------------
 
-Cada URL gera um relatório individual em HTML.
+## 🔍 O que é Avaliado
 
-🧪 6. O que o Scanner Analisa
-✅ 6.1 Conectividade HTTP
+### ✅ Conectividade HTTP
 
-Status HTTP
+-   Status HTTP
+-   Tempo de resposta
 
-Tempo de resposta
+### ✅ Certificado Digital TLS
 
-✅ 6.2 Certificado TLS / HTTPS
+-   Emissor
+-   Validade
+-   Dias restantes
+-   Classificação de risco
 
-Emissor
+### ✅ Cabeçalhos de Segurança
 
-Validade
+-   CSP
+-   HSTS
+-   X-Frame-Options
+-   X-Content-Type-Options
+-   Referrer-Policy
+-   Permissions-Policy
 
-Dias para expirar
+### ✅ Caminhos Sensíveis
 
-Classificação automática de risco
+-   `/admin`
+-   `/login`
+-   `/dashboard`
+-   `/actuator`
+-   `/wp-admin`
+-   `/temp`
+-   `/test`
+-   `/sistema`
 
-✅ 6.3 Cabeçalhos de Segurança
+------------------------------------------------------------------------
 
-Content-Security-Policy (CSP)
+## 📊 Score de Risco
 
-Strict-Transport-Security (HSTS)
+A ferramenta calcula automaticamente:
 
-X-Frame-Options
+  Score     Classificação
+  --------- ---------------
+  0--39     🟢 Baixo
+  40--69    🟠 Médio
+  70--100   🔴 Alto
 
-X-Content-Type-Options
+------------------------------------------------------------------------
 
-Referrer-Policy
+## 🗂️ Relatório em HTML
 
-Permissions-Policy
+Cada varredura gera um relatório contendo:
 
-✅ 6.4 Enumeração de Caminhos Sensíveis
+-   Identificação da URL
+-   Data da varredura
+-   Score geral
+-   Tabelas de headers e endpoints
+-   Mapeamento automático OWASP
+-   Recomendações técnicas dinâmicas
+-   Conclusão automática
 
-Exemplos:
+------------------------------------------------------------------------
 
-/admin
+## 🔐 Uso Responsável
 
-/login
+⚠️ **Esta ferramenta é EXCLUSIVAMENTE para uso autorizado.**
 
-/dashboard
+------------------------------------------------------------------------
 
-/actuator
+## 👨‍💻 Responsável Técnico
 
-/wp-admin
+**Marco Aurellio Machado Nunes**\
+Analista de Tecnologia da Informação -- GTIC
 
-/temp
+------------------------------------------------------------------------
 
-/test
+## ✅ Licença de Uso
 
-/sistema
-
-📊 7. Score de Risco
-
-O sistema gera automaticamente:
-
-Score de 0 a 100
-
-Classificação:
-
-LOW → Risco Baixo
-
-MEDIUM → Risco Médio
-
-HIGH → Risco Alto
-
-O cálculo utiliza:
-
-quantidade de headers ausentes,
-
-endpoints sensíveis acessíveis,
-
-risco do certificado TLS.
-
-🗂️ 8. Geração de Relatório HTML
-
-Cada execução gera automaticamente um relatório técnico contendo:
-
-Identificação do sistema
-
-Data da varredura
-
-Score geral
-
-Tabela de cabeçalhos
-
-Tabela de endpoints
-
-Mapeamento automático OWASP
-
-Recomendações técnicas dinâmicas
-
-Conclusão automática baseada nos achados
-
-Identificação do responsável técnico
-
-O relatório é salvo em:
-
-/reports/scan-<hostname>-<data>.html
-
-
-Basta abrir no navegador.
-
-🔎 9. Mapeamento OWASP Automático
-
-O sistema correlaciona automaticamente os achados com:
-
-A01 – Broken Access Control
-
-A02 – Cryptographic Failures
-
-A05 – Security Misconfiguration
-
-A06 – Vulnerable and Outdated Components
-
-🔐 10. Boas Práticas e Segurança Legal
-
-⚠️ Esta ferramenta não deve ser usada para ataque, exploração ou testes sem autorização.
-
-Uso permitido:
-
-Ambientes próprios
-
-Homologação
-
-Treinamento
-
-Sistemas com autorização formal por escrito
-
-Uso proibido:
-
-Produção sem autorização
-
-Sistemas de terceiros sem contrato
-
-Ambientes governamentais sem ordem formal
-
-🛠️ 11. Possíveis Evoluções Futuras
-
-Geração automática de PDF
-
-Dashboard web consolidado
-
-Integração com OWASP ZAP
-
-Exportação para Excel
-
-Ranking de risco por sistema
-
-Alertas automáticos por e-mail
-
-Integração com sistema de chamados
-
-👨‍💻 12. Responsável Técnico
-
-Desenvolvido por:
-
-Marco Aurellio Machado Nunes
-Analista de Tecnologia da Informação – GTIC
-Foco em Cibersegurança, Governança de TI e Auditoria de Sistemas
-
-✅ 13. Licença de Uso
-
-Ferramenta de uso interno e educativo, sem fins comerciais, voltada para:
-
-gestão de riscos,
-
-melhoria de segurança,
-
-conformidade institucional.
+Ferramenta de uso **interno, educacional e institucional**, sem fins
+comerciais.

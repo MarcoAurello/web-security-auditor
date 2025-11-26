@@ -1,24 +1,17 @@
 // src/reportGenerator.js
 import fs from "fs";
 
-// ------------ FUNÇÕES INTELIGENTES ------------
-
 function buildOwaspMap(headers, paths, tls) {
   const map = [];
 
-  const hasMissingHeaders = headers.some(h => h.risk === "high" || h.risk === "medium");
-  if (hasMissingHeaders) {
+  if (headers.some(h => h.risk !== "low")) {
     map.push({
       category: "A05 - Security Misconfiguration",
-      evidence: "Ausência ou falha em headers de segurança (CSP, HSTS, X-Frame-Options, etc.)."
+      evidence: "Ausência ou falha em cabeçalhos de segurança."
     });
   }
 
-  const hasPublicAdmin = paths.some(p =>
-    p.status === 200 &&
-    ["/admin", "/login", "/dashboard", "/control", "/wp-admin", "/wp-login.php"].includes(p.path)
-  );
-  if (hasPublicAdmin) {
+  if (paths.some(p => p.status === 200 && ["/admin", "/login", "/dashboard", "/control", "/wp-admin"].includes(p.path))) {
     map.push({
       category: "A01 - Broken Access Control",
       evidence: "Endpoints administrativos acessíveis publicamente (HTTP 200)."
@@ -28,21 +21,21 @@ function buildOwaspMap(headers, paths, tls) {
   if (paths.some(p => p.path.includes("actuator") && p.status === 200)) {
     map.push({
       category: "A05 - Security Misconfiguration",
-      evidence: "Endpoints do Spring Boot Actuator expostos."
+      evidence: "Endpoints Spring Boot Actuator expostos."
     });
   }
 
   if (paths.some(p => p.path.includes("wp-"))) {
     map.push({
       category: "A06 - Vulnerable and Outdated Components",
-      evidence: "Indícios de WordPress em produção."
+      evidence: "Indícios de WordPress público."
     });
   }
 
   if (tls && tls.ok && tls.risk !== "low") {
     map.push({
       category: "A02 - Cryptographic Failures",
-      evidence: "Configuração TLS com risco médio ou alto."
+      evidence: "Configuração TLS abaixo do recomendado."
     });
   }
 
@@ -53,27 +46,16 @@ function buildRecommendations(headers, paths, tls) {
   const recs = [];
 
   if (headers.some(h => h.header === "content-security-policy" && !h.present)) {
-    recs.push("Implementar imediatamente o header Content-Security-Policy (CSP) para mitigação de XSS.");
+    recs.push("Implementar imediatamente o header Content-Security-Policy (CSP).");
   }
 
   if (headers.some(h => h.header === "strict-transport-security" && !h.present)) {
-    recs.push("Ativar o header Strict-Transport-Security (HSTS) para forçar uso de HTTPS.");
+    recs.push("Ativar o header Strict-Transport-Security (HSTS).");
   }
 
   paths.forEach(p => {
     if (p.status === 200) {
-      if (["/admin", "/login", "/dashboard", "/control"].includes(p.path)) {
-        recs.push(`Restringir acesso público ao endpoint ${p.path} por autenticação forte, ACL ou VPN.`);
-      }
-      if (p.path.includes("actuator")) {
-        recs.push(`Bloquear o endpoint ${p.path} em produção (Spring Boot Actuator).`);
-      }
-      if (p.path.includes("wp-")) {
-        recs.push("Aplicar WAF específico para WordPress e restringir /wp-admin por IP.");
-      }
-      if (["/temp", "/test"].includes(p.path)) {
-        recs.push(`Remover ou proteger o endpoint de ambiente temporário ${p.path}.`);
-      }
+      recs.push(`Restringir acesso público ao endpoint: ${p.fullUrl}`);
     }
   });
 
@@ -81,31 +63,29 @@ function buildRecommendations(headers, paths, tls) {
     recs.push("Planejar renovação antecipada do certificado digital.");
   }
 
-  return [...new Set(recs)]; // remove duplicados
+  return [...new Set(recs)];
 }
 
-function buildConclusion(risk, headers, paths) {
-  const criticalEndpoints = paths.filter(p => p.status === 200).map(p => p.path);
+function buildConclusion(risk, paths) {
+  const exposed = paths.filter(p => p.status === 200).map(p => p.path);
 
   if (risk.level === "high") {
-    return `O sistema apresenta RISCO ALTO, com múltiplos pontos críticos de exposição pública, incluindo: ${criticalEndpoints.join(", ")}. Recomenda-se atuação imediata para mitigação dos riscos e nova auditoria após correções.`;
+    return `O sistema apresenta RISCO ALTO, com múltiplos endpoints acessíveis publicamente: ${exposed.join(", ")}. Recomenda-se mitigação imediata.`;
   }
 
   if (risk.level === "medium") {
-    return `O sistema apresenta RISCO MÉDIO, com falhas de configuração e exposição pontual de endpoints sensíveis (${criticalEndpoints.join(", ")}). Recomenda-se tratamento priorizado e reavaliação em curto prazo.`;
+    return `O sistema apresenta RISCO MÉDIO, com exposição pontual de endpoints: ${exposed.join(", ")}. Recomenda-se correção priorizada.`;
   }
 
-  return "O sistema apresenta RISCO BAIXO no momento da varredura, mantendo-se dentro de parâmetros aceitáveis de segurança para exposição externa.";
+  return "O sistema apresenta RISCO BAIXO no momento da varredura.";
 }
-
-// ------------ GERADOR DO RELATÓRIO ------------
 
 export function generateHtmlReport(result, outputPath) {
   const { target, scannedAt, http, tls, headers, paths, risk } = result;
 
   const owaspMap = buildOwaspMap(headers, paths, tls);
   const recommendations = buildRecommendations(headers, paths, tls);
-  const conclusion = buildConclusion(risk, headers, paths);
+  const conclusion = buildConclusion(risk, paths);
 
   const headerRows = headers.map(h => `
     <tr>
@@ -118,7 +98,10 @@ export function generateHtmlReport(result, outputPath) {
 
   const pathRows = paths.map(p => `
     <tr>
-      <td>${p.path}</td>
+      <td>
+        ${p.path}<br>
+        <a href="${p.fullUrl}" target="_blank">${p.fullUrl}</a>
+      </td>
       <td>${p.status ?? "N/A"}</td>
       <td class="${p.risk || "low"}">${(p.risk || "low").toUpperCase()}</td>
       <td>${p.note}</td>
@@ -175,7 +158,7 @@ export function generateHtmlReport(result, outputPath) {
   </div>
 
   <div class="box">
-    <h2>3. Caminhos Sensíveis</h2>
+    <h2>3. Caminhos Sensíveis (com URL completa)</h2>
     <table>
       <tr><th>Path</th><th>Status</th><th>Risco</th><th>Observação</th></tr>
       ${pathRows}
@@ -183,7 +166,7 @@ export function generateHtmlReport(result, outputPath) {
   </div>
 
   <div class="box">
-    <h2>4. Mapeamento OWASP Automático</h2>
+    <h2>4. Mapeamento OWASP (Automático)</h2>
     <table>
       <tr><th>Categoria</th><th>Evidência</th></tr>
       ${owaspRows || "<tr><td colspan='2'>Nenhuma categoria crítica mapeada.</td></tr>"}
@@ -191,7 +174,7 @@ export function generateHtmlReport(result, outputPath) {
   </div>
 
   <div class="box">
-    <h2>5. Recomendações Técnicas Geradas Automaticamente</h2>
+    <h2>5. Recomendações Técnicas Automáticas</h2>
     <ul>
       ${recRows || "<li>Nenhuma recomendação crítica no momento.</li>"}
     </ul>
