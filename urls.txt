@@ -1,0 +1,7 @@
+https://app1.pe.senac.br/taskmanager/login
+https://app1.pe.senac.br/taskmanagerglc/login
+https://app1.pe.senac.br/pagamento/login
+https://www6.pe.senac.br/agenda/login.php
+https://app1.pe.senac.br/servicosgerais/login
+https://www6.pe.senac.br/evento/login.php
+https://www.pe.senac.br/

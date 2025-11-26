@@ -1,0 +1,13 @@
+{
+  "name": "web-security-auditor",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "scan": "node src/index.js",
+    "scan:batch": "node src/batchScan.js"
+  },
+  "dependencies": {
+    "axios": "^1.7.7",
+    "chalk": "^5.3.0"
+  }
+}
