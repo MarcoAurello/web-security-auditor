@@ -1,0 +1,643 @@
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Relatório de Segurança - https://spd.hemobras.gov.br/</title>
+  <style>
+    body { font-family: Arial; background: #f3f4f6; padding: 40px; }
+    .container { max-width: 1200px; margin: auto; background: white; padding: 40px; border-radius: 10px; }
+    h1, h2 { color: #111827; }
+    .box { margin-bottom: 40px; }
+
+    table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+    th, td { border: 1px solid #ccc; padding: 8px; font-size: 14px; }
+    th { background: #e5e7eb; }
+
+    .low { color: green; font-weight: bold; }
+    .medium { color: orange; font-weight: bold; }
+    .high { color: red; font-weight: bold; }
+
+    .CRÍTICO { color: darkred; font-weight: bold; }
+    .ALTO { color: red; font-weight: bold; }
+    .MÉDIO { color: orange; font-weight: bold; }
+    .BAIXO { color: green; font-weight: bold; }
+
+    .severity-high { background: #fecaca; }
+    .severity-medium { background: #fde68a; }
+    .severity-low { background: #bbf7d0; }
+  </style>
+</head>
+
+<body>
+<div class="container">
+
+  <h1>Relatório Técnico de Segurança da Informação</h1>
+
+  <p><b>URL Avaliada:</b> https://spd.hemobras.gov.br/</p>
+  <p><b>Data da Varredura:</b> 11/26/2025, 10:51:23 AM</p>
+  <p><b>Classificação Institucional:</b> <span class="MÉDIO">MÉDIO</span></p>
+
+  <div class="box">
+    <h2>1. Score Geral</h2>
+    <p><b>40/100</b> — Nível Técnico: <span class="medium">MEDIUM</span></p>
+
+    <ul>
+      <li>Headers: 40</li>
+      <li>TLS: 0</li>
+      <li>Paths: 0</li>
+      <li>CORS: 0</li>
+      <li>CVEs: 0</li>
+    </ul>
+  </div>
+
+  <div class="box">
+    <h2>2. Tecnologia Detectada</h2>
+    <ul>
+      <li>Servidor: unknown</li>
+      <li>Backend: unknown</li>
+      <li>Frontend: unknown</li>
+      <li>CMS: unknown</li>
+    </ul>
+  </div>
+
+  <div class="box">
+    <h2>3. Cabeçalhos de Segurança</h2>
+    <table>
+      <tr><th>Header</th><th>Presente</th><th>Risco</th><th>Observação</th></tr>
+      
+    <tr>
+      <td>strict-transport-security</td>
+      <td>Não</td>
+      <td class="medium">MEDIUM</td>
+      <td></td>
+    </tr>
+  
+    <tr>
+      <td>content-security-policy</td>
+      <td>Não</td>
+      <td class="medium">MEDIUM</td>
+      <td></td>
+    </tr>
+  
+    <tr>
+      <td>x-frame-options</td>
+      <td>Não</td>
+      <td class="medium">MEDIUM</td>
+      <td></td>
+    </tr>
+  
+    <tr>
+      <td>x-content-type-options</td>
+      <td>Não</td>
+      <td class="medium">MEDIUM</td>
+      <td></td>
+    </tr>
+  
+    <tr>
+      <td>referrer-policy</td>
+      <td>Não</td>
+      <td class="medium">MEDIUM</td>
+      <td></td>
+    </tr>
+  
+    <tr>
+      <td>permissions-policy</td>
+      <td>Não</td>
+      <td class="medium">MEDIUM</td>
+      <td></td>
+    </tr>
+  
+    <tr>
+      <td>content-security-policy</td>
+      <td>Não</td>
+      <td class="high">HIGH</td>
+      <td>Ausência de CSP aumenta risco de XSS.</td>
+    </tr>
+  
+    <tr>
+      <td>strict-transport-security</td>
+      <td>Não</td>
+      <td class="high">HIGH</td>
+      <td>Sem HSTS, o browser pode aceitar HTTP em vez de HTTPS.</td>
+    </tr>
+  
+    </table>
+  </div>
+
+  <div class="box">
+    <h2>4. Caminhos Sensíveis</h2>
+    <table>
+      <tr><th>Path</th><th>Status</th><th>Risco</th><th>Observação</th></tr>
+      
+    <tr>
+      <td>
+        /admin<br>
+        <small><a href="https://spd.hemobras.gov.br/admin" target="_blank">https://spd.hemobras.gov.br/admin</a></small>
+      </td>
+      <td>404</td>
+      <td class="low">LOW</td>
+      <td>Não encontrado ou protegido.</td>
+    </tr>
+  
+    <tr>
+      <td>
+        /administrator<br>
+        <small><a href="https://spd.hemobras.gov.br/administrator" target="_blank">https://spd.hemobras.gov.br/administrator</a></small>
+      </td>
+      <td>404</td>
+      <td class="low">LOW</td>
+      <td>Não encontrado ou protegido.</td>
+    </tr>
+  
+    <tr>
+      <td>
+        /login<br>
+        <small><a href="https://spd.hemobras.gov.br/login" target="_blank">https://spd.hemobras.gov.br/login</a></small>
+      </td>
+      <td>200</td>
+      <td class="low">LOW</td>
+      <td>Roteamento genérico (mesma tela base).</td>
+    </tr>
+  
+    <tr>
+      <td>
+        /logout<br>
+        <small><a href="https://spd.hemobras.gov.br/logout" target="_blank">https://spd.hemobras.gov.br/logout</a></small>
+      </td>
+      <td>200</td>
+      <td class="low">LOW</td>
+      <td>Roteamento genérico (mesma tela base).</td>
+    </tr>
+  
+    <tr>
+      <td>
+        /dashboard<br>
+        <small><a href="https://spd.hemobras.gov.br/dashboard" target="_blank">https://spd.hemobras.gov.br/dashboard</a></small>
+      </td>
+      <td>404</td>
+      <td class="low">LOW</td>
+      <td>Não encontrado ou protegido.</td>
+    </tr>
+  
+    <tr>
+      <td>
+        /control<br>
+        <small><a href="https://spd.hemobras.gov.br/control" target="_blank">https://spd.hemobras.gov.br/control</a></small>
+      </td>
+      <td>404</td>
+      <td class="low">LOW</td>
+      <td>Não encontrado ou protegido.</td>
+    </tr>
+  
+    <tr>
+      <td>
+        /swagger<br>
+        <small><a href="https://spd.hemobras.gov.br/swagger" target="_blank">https://spd.hemobras.gov.br/swagger</a></small>
+      </td>
+      <td>404</td>
+      <td class="low">LOW</td>
+      <td>Não encontrado ou protegido.</td>
+    </tr>
+  
+    <tr>
+      <td>
+        /swagger-ui<br>
+        <small><a href="https://spd.hemobras.gov.br/swagger-ui" target="_blank">https://spd.hemobras.gov.br/swagger-ui</a></small>
+      </td>
+      <td>404</td>
+      <td class="low">LOW</td>
+      <td>Não encontrado ou protegido.</td>
+    </tr>
+  
+    <tr>
+      <td>
+        /v2/api-docs<br>
+        <small><a href="https://spd.hemobras.gov.br/v2/api-docs" target="_blank">https://spd.hemobras.gov.br/v2/api-docs</a></small>
+      </td>
+      <td>404</td>
+      <td class="low">LOW</td>
+      <td>Não encontrado ou protegido.</td>
+    </tr>
+  
+    <tr>
+      <td>
+        /v3/api-docs<br>
+        <small><a href="https://spd.hemobras.gov.br/v3/api-docs" target="_blank">https://spd.hemobras.gov.br/v3/api-docs</a></small>
+      </td>
+      <td>404</td>
+      <td class="low">LOW</td>
+      <td>Não encontrado ou protegido.</td>
+    </tr>
+  
+    <tr>
+      <td>
+        /api-docs<br>
+        <small><a href="https://spd.hemobras.gov.br/api-docs" target="_blank">https://spd.hemobras.gov.br/api-docs</a></small>
+      </td>
+      <td>404</td>
+      <td class="low">LOW</td>
+      <td>Não encontrado ou protegido.</td>
+    </tr>
+  
+    <tr>
+      <td>
+        /openapi<br>
+        <small><a href="https://spd.hemobras.gov.br/openapi" target="_blank">https://spd.hemobras.gov.br/openapi</a></small>
+      </td>
+      <td>404</td>
+      <td class="low">LOW</td>
+      <td>Não encontrado ou protegido.</td>
+    </tr>
+  
+    <tr>
+      <td>
+        /redoc<br>
+        <small><a href="https://spd.hemobras.gov.br/redoc" target="_blank">https://spd.hemobras.gov.br/redoc</a></small>
+      </td>
+      <td>404</td>
+      <td class="low">LOW</td>
+      <td>Não encontrado ou protegido.</td>
+    </tr>
+  
+    <tr>
+      <td>
+        /actuator<br>
+        <small><a href="https://spd.hemobras.gov.br/actuator" target="_blank">https://spd.hemobras.gov.br/actuator</a></small>
+      </td>
+      <td>404</td>
+      <td class="low">LOW</td>
+      <td>Não encontrado ou protegido.</td>
+    </tr>
+  
+    <tr>
+      <td>
+        /actuator/health<br>
+        <small><a href="https://spd.hemobras.gov.br/actuator/health" target="_blank">https://spd.hemobras.gov.br/actuator/health</a></small>
+      </td>
+      <td>404</td>
+      <td class="low">LOW</td>
+      <td>Não encontrado ou protegido.</td>
+    </tr>
+  
+    <tr>
+      <td>
+        /actuator/info<br>
+        <small><a href="https://spd.hemobras.gov.br/actuator/info" target="_blank">https://spd.hemobras.gov.br/actuator/info</a></small>
+      </td>
+      <td>404</td>
+      <td class="low">LOW</td>
+      <td>Não encontrado ou protegido.</td>
+    </tr>
+  
+    <tr>
+      <td>
+        /config<br>
+        <small><a href="https://spd.hemobras.gov.br/config" target="_blank">https://spd.hemobras.gov.br/config</a></small>
+      </td>
+      <td>404</td>
+      <td class="low">LOW</td>
+      <td>Não encontrado ou protegido.</td>
+    </tr>
+  
+    <tr>
+      <td>
+        /settings<br>
+        <small><a href="https://spd.hemobras.gov.br/settings" target="_blank">https://spd.hemobras.gov.br/settings</a></small>
+      </td>
+      <td>404</td>
+      <td class="low">LOW</td>
+      <td>Não encontrado ou protegido.</td>
+    </tr>
+  
+    <tr>
+      <td>
+        /.env<br>
+        <small><a href="https://spd.hemobras.gov.br/.env" target="_blank">https://spd.hemobras.gov.br/.env</a></small>
+      </td>
+      <td>404</td>
+      <td class="low">LOW</td>
+      <td>Não encontrado ou protegido.</td>
+    </tr>
+  
+    <tr>
+      <td>
+        /.git<br>
+        <small><a href="https://spd.hemobras.gov.br/.git" target="_blank">https://spd.hemobras.gov.br/.git</a></small>
+      </td>
+      <td>404</td>
+      <td class="low">LOW</td>
+      <td>Não encontrado ou protegido.</td>
+    </tr>
+  
+    <tr>
+      <td>
+        /backup<br>
+        <small><a href="https://spd.hemobras.gov.br/backup" target="_blank">https://spd.hemobras.gov.br/backup</a></small>
+      </td>
+      <td>404</td>
+      <td class="low">LOW</td>
+      <td>Não encontrado ou protegido.</td>
+    </tr>
+  
+    <tr>
+      <td>
+        /db.sql<br>
+        <small><a href="https://spd.hemobras.gov.br/db.sql" target="_blank">https://spd.hemobras.gov.br/db.sql</a></small>
+      </td>
+      <td>404</td>
+      <td class="low">LOW</td>
+      <td>Não encontrado ou protegido.</td>
+    </tr>
+  
+    <tr>
+      <td>
+        /server-status<br>
+        <small><a href="https://spd.hemobras.gov.br/server-status" target="_blank">https://spd.hemobras.gov.br/server-status</a></small>
+      </td>
+      <td>404</td>
+      <td class="low">LOW</td>
+      <td>Não encontrado ou protegido.</td>
+    </tr>
+  
+    <tr>
+      <td>
+        /upload<br>
+        <small><a href="https://spd.hemobras.gov.br/upload" target="_blank">https://spd.hemobras.gov.br/upload</a></small>
+      </td>
+      <td>404</td>
+      <td class="low">LOW</td>
+      <td>Não encontrado ou protegido.</td>
+    </tr>
+  
+    <tr>
+      <td>
+        /tmp<br>
+        <small><a href="https://spd.hemobras.gov.br/tmp" target="_blank">https://spd.hemobras.gov.br/tmp</a></small>
+      </td>
+      <td>404</td>
+      <td class="low">LOW</td>
+      <td>Não encontrado ou protegido.</td>
+    </tr>
+  
+    <tr>
+      <td>
+        /auth<br>
+        <small><a href="https://spd.hemobras.gov.br/auth" target="_blank">https://spd.hemobras.gov.br/auth</a></small>
+      </td>
+      <td>404</td>
+      <td class="low">LOW</td>
+      <td>Não encontrado ou protegido.</td>
+    </tr>
+  
+    <tr>
+      <td>
+        /oauth<br>
+        <small><a href="https://spd.hemobras.gov.br/oauth" target="_blank">https://spd.hemobras.gov.br/oauth</a></small>
+      </td>
+      <td>404</td>
+      <td class="low">LOW</td>
+      <td>Não encontrado ou protegido.</td>
+    </tr>
+  
+    <tr>
+      <td>
+        /sistema<br>
+        <small><a href="https://spd.hemobras.gov.br/sistema" target="_blank">https://spd.hemobras.gov.br/sistema</a></small>
+      </td>
+      <td>404</td>
+      <td class="low">LOW</td>
+      <td>Não encontrado ou protegido.</td>
+    </tr>
+  
+    <tr>
+      <td>
+        /interno<br>
+        <small><a href="https://spd.hemobras.gov.br/interno" target="_blank">https://spd.hemobras.gov.br/interno</a></small>
+      </td>
+      <td>404</td>
+      <td class="low">LOW</td>
+      <td>Não encontrado ou protegido.</td>
+    </tr>
+  
+    <tr>
+      <td>
+        /privado<br>
+        <small><a href="https://spd.hemobras.gov.br/privado" target="_blank">https://spd.hemobras.gov.br/privado</a></small>
+      </td>
+      <td>404</td>
+      <td class="low">LOW</td>
+      <td>Não encontrado ou protegido.</td>
+    </tr>
+  
+    <tr>
+      <td>
+        /docker<br>
+        <small><a href="https://spd.hemobras.gov.br/docker" target="_blank">https://spd.hemobras.gov.br/docker</a></small>
+      </td>
+      <td>404</td>
+      <td class="low">LOW</td>
+      <td>Não encontrado ou protegido.</td>
+    </tr>
+  
+    <tr>
+      <td>
+        /kubernetes<br>
+        <small><a href="https://spd.hemobras.gov.br/kubernetes" target="_blank">https://spd.hemobras.gov.br/kubernetes</a></small>
+      </td>
+      <td>404</td>
+      <td class="low">LOW</td>
+      <td>Não encontrado ou protegido.</td>
+    </tr>
+  
+    <tr>
+      <td>
+        /metrics<br>
+        <small><a href="https://spd.hemobras.gov.br/metrics" target="_blank">https://spd.hemobras.gov.br/metrics</a></small>
+      </td>
+      <td>404</td>
+      <td class="low">LOW</td>
+      <td>Não encontrado ou protegido.</td>
+    </tr>
+  
+    <tr>
+      <td>
+        /status<br>
+        <small><a href="https://spd.hemobras.gov.br/status" target="_blank">https://spd.hemobras.gov.br/status</a></small>
+      </td>
+      <td>404</td>
+      <td class="low">LOW</td>
+      <td>Não encontrado ou protegido.</td>
+    </tr>
+  
+    <tr>
+      <td>
+        /health<br>
+        <small><a href="https://spd.hemobras.gov.br/health" target="_blank">https://spd.hemobras.gov.br/health</a></small>
+      </td>
+      <td>404</td>
+      <td class="low">LOW</td>
+      <td>Não encontrado ou protegido.</td>
+    </tr>
+  
+    <tr>
+      <td>
+        /ping<br>
+        <small><a href="https://spd.hemobras.gov.br/ping" target="_blank">https://spd.hemobras.gov.br/ping</a></small>
+      </td>
+      <td>404</td>
+      <td class="low">LOW</td>
+      <td>Não encontrado ou protegido.</td>
+    </tr>
+  
+    <tr>
+      <td>
+        /wp-admin<br>
+        <small><a href="https://spd.hemobras.gov.br/wp-admin" target="_blank">https://spd.hemobras.gov.br/wp-admin</a></small>
+      </td>
+      <td>404</td>
+      <td class="low">LOW</td>
+      <td>Não encontrado ou protegido.</td>
+    </tr>
+  
+    <tr>
+      <td>
+        /wp-login.php<br>
+        <small><a href="https://spd.hemobras.gov.br/wp-login.php" target="_blank">https://spd.hemobras.gov.br/wp-login.php</a></small>
+      </td>
+      <td>404</td>
+      <td class="low">LOW</td>
+      <td>Não encontrado ou protegido.</td>
+    </tr>
+  
+    <tr>
+      <td>
+        /xmlrpc.php<br>
+        <small><a href="https://spd.hemobras.gov.br/xmlrpc.php" target="_blank">https://spd.hemobras.gov.br/xmlrpc.php</a></small>
+      </td>
+      <td>404</td>
+      <td class="low">LOW</td>
+      <td>Não encontrado ou protegido.</td>
+    </tr>
+  
+    <tr>
+      <td>
+        /test<br>
+        <small><a href="https://spd.hemobras.gov.br/test" target="_blank">https://spd.hemobras.gov.br/test</a></small>
+      </td>
+      <td>404</td>
+      <td class="low">LOW</td>
+      <td>Não encontrado ou protegido.</td>
+    </tr>
+  
+    <tr>
+      <td>
+        /homolog<br>
+        <small><a href="https://spd.hemobras.gov.br/homolog" target="_blank">https://spd.hemobras.gov.br/homolog</a></small>
+      </td>
+      <td>404</td>
+      <td class="low">LOW</td>
+      <td>Não encontrado ou protegido.</td>
+    </tr>
+  
+    <tr>
+      <td>
+        /homologacao<br>
+        <small><a href="https://spd.hemobras.gov.br/homologacao" target="_blank">https://spd.hemobras.gov.br/homologacao</a></small>
+      </td>
+      <td>404</td>
+      <td class="low">LOW</td>
+      <td>Não encontrado ou protegido.</td>
+    </tr>
+  
+    </table>
+  </div>
+
+  <div class="box">
+    <h2>5. Segurança de Sessão (Cookies)</h2>
+    <p><b>Risco:</b> LOW</p>
+    <p>Cookies configurados corretamente.</p>
+
+    <table>
+      <tr><th>Cookie</th><th>HttpOnly</th><th>Secure</th><th>SameSite</th></tr>
+      
+    <tr>
+      <td>JSESSIONID=AE4E7E4B7562459A215B58B33E265A13; Path=/; Secure; HttpOnly</td>
+      <td>Sim</td>
+      <td>Sim</td>
+      <td>Não informado</td>
+    </tr>
+  
+    </table>
+  </div>
+
+  <div class="box">
+    <h2>6. Métodos HTTP Perigosos</h2>
+    <table>
+      <tr><th>Método</th><th>Status</th><th>Risco</th><th>Observação</th></tr>
+      
+    <tr>
+      <td>OPTIONS</td>
+      <td>200</td>
+      <td class="high">HIGH</td>
+      <td>Método HTTP OPTIONS aceito pelo servidor.</td>
+    </tr>
+  
+    <tr>
+      <td>PUT</td>
+      <td>200</td>
+      <td class="high">HIGH</td>
+      <td>Método HTTP PUT aceito pelo servidor.</td>
+    </tr>
+  
+    <tr>
+      <td>DELETE</td>
+      <td>200</td>
+      <td class="high">HIGH</td>
+      <td>Método HTTP DELETE aceito pelo servidor.</td>
+    </tr>
+  
+    <tr>
+      <td>TRACE</td>
+      <td>200</td>
+      <td class="high">HIGH</td>
+      <td>Método HTTP TRACE aceito pelo servidor.</td>
+    </tr>
+  
+    </table>
+  </div>
+
+  <div class="box">
+    <h2>7. Vulnerabilidades Conhecidas (CVE)</h2>
+    <p><b>Risco por CVE:</b> <span class="low">LOW</span></p>
+    <p><b>Total de CVEs Detectadas:</b> 0</p>
+
+    <table>
+      <tr>
+        <th>Produto</th>
+        <th>Versão</th>
+        <th>CVE</th>
+        <th>Severidade</th>
+        <th>Descrição</th>
+      </tr>
+      <tr><td colspan="5">Nenhuma CVE conhecida detectada.</td></tr>
+    </table>
+  </div>
+
+  <div class="box">
+    <h2>8. Conclusão Executiva</h2>
+    <p>
+      Com base nos testes realizados de forma não intrusiva, o sistema avaliado
+      foi classificado institucionalmente como
+      <b class="MÉDIO">MÉDIO</b>.
+      Recomenda-se priorização das correções conforme o nível de criticidade apresentado,
+      com atenção especial às vulnerabilidades de maior impacto operacional e de segurança.
+    </p>
+  </div>
+
+  <hr>
+  <p><b>Responsável Técnico:</b> Marco Aurellio Machado Nunes – Analista de Tecnologia da Informação – GTIC</p>
+
+</div>
+</body>
+</html>
