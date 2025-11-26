@@ -10,48 +10,31 @@ const COMMON_PATHS = [
   "/control",
   "/swagger",
   "/swagger-ui",
-  "/swagger-ui.html",
   "/v2/api-docs",
   "/v3/api-docs",
   "/api-docs",
   "/openapi",
-  "/openapi.json",
   "/redoc",
   "/actuator",
   "/actuator/health",
   "/actuator/info",
-  "/actuator/env",
   "/config",
-  "/configs",
-  "/config.json",
   "/settings",
-  "/settings.json",
   "/.env",
   "/.git",
   "/backup",
-  "/backup.zip",
-  "/backup.tar",
-  "/backup.sql",
   "/db.sql",
-  "/dump.sql",
-  "/database.sql",
-  "/phpinfo.php",
   "/server-status",
   "/upload",
-  "/uploads",
-  "/files",
   "/tmp",
-  "/temp",
   "/auth",
   "/oauth",
-  "/sisadmin",
   "/sistema",
   "/interno",
   "/privado",
   "/docker",
   "/kubernetes",
   "/metrics",
-  "/monitor",
   "/status",
   "/health",
   "/ping",
@@ -59,53 +42,68 @@ const COMMON_PATHS = [
   "/wp-login.php",
   "/xmlrpc.php",
   "/test",
-  "/tests",
-  "/qa",
   "/homolog",
   "/homologacao"
 ];
 
+function extractTitle(html = "") {
+  const match = html.match(/<title>(.*?)<\/title>/i);
+  return match ? match[1].trim() : "sem título";
+}
+
 export async function scanSensitivePaths(baseUrl) {
   const results = [];
 
+  const cleanBase = baseUrl.replace(/\/$/, "");
+
   for (const path of COMMON_PATHS) {
-    const fullUrl = `${baseUrl.replace(/\/$/, "")}${path}`;
+    const fullUrl = `${cleanBase}${path}`;
 
     try {
       const res = await httpGet(fullUrl);
 
+      const body = res.body || "";
+      const title = extractTitle(body);
+      const size = body.length;
+
       let risk = "low";
       let note = "Não encontrado ou protegido.";
 
-      if (res.ok && res.status === 200) {
-        risk = "high";
-        note = "Endpoint sensível acessível (200). Verificar restrição.";
+      if (res.status === 200) {
+        risk = "high"; // será corrigido depois pela heurística
+        note = "Resposta HTTP 200 detectada.";
       } else if (res.status === 401 || res.status === 403) {
         risk = "low";
         note = "Protegido por autenticação/autorização.";
       } else if (res.status === 405) {
         risk = "medium";
-        note = "Endpoint existe, mas método não permitido (405).";
-      } else if (res.status === 301 || res.status === 302) {
+        note = "Método não permitido (405).";
+      } else if ([301, 302].includes(res.status)) {
         risk = "medium";
-        note = "Endpoint redireciona. Avaliar destino.";
+        note = "Redirecionamento detectado.";
       }
 
       results.push({
         path,
-        fullUrl,              // ✅ URL completa capturada
+        fullUrl,
         status: res.status,
         risk,
-        note
+        note,
+        body,
+        title,
+        size
       });
 
     } catch (err) {
       results.push({
         path,
-        fullUrl,              // ✅ URL completa capturada mesmo com erro
+        fullUrl,
         status: null,
         risk: "low",
-        note: "Erro ao acessar o endpoint."
+        note: "Erro ao acessar o endpoint.",
+        body: "",
+        title: "sem título",
+        size: 0
       });
     }
   }

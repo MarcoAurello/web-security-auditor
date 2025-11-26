@@ -40,7 +40,11 @@ async function main() {
   const tlsResult = await scanTls(target);
 
   // 4. Caminhos sensíveis
-  const pathsResults = await scanSensitivePaths(target);
+
+const origin = `${urlObj.protocol}//${urlObj.host}`; // ex: https://www6.pe.senac.br
+
+const pathsResults = await scanSensitivePaths(origin);
+
 
   // 5. Score de risco
   const riskSummary = computeRiskScore(httpInfo, headerResults, tlsResult, pathsResults);

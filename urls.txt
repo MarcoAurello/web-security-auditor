@@ -1,7 +1,5 @@
-https://app1.pe.senac.br/taskmanager/login
-https://app1.pe.senac.br/taskmanagerglc/login
-https://app1.pe.senac.br/pagamento/login
-https://www6.pe.senac.br/agenda/login.php
-https://app1.pe.senac.br/servicosgerais/login
-https://www6.pe.senac.br/evento/login.php
-https://www.pe.senac.br/
+https://www.hemobras.gov.br
+https://salarios.hemobras.gov.br
+https://hemobras.medwms.com.br/
+https://licitacoes.hemobras.gov.br/
+https://spd.hemobras.gov.br/

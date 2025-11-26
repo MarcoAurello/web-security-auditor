@@ -1,70 +1,70 @@
 // src/riskScorer.js
 
-// Função simples para converter severidade em pontos
 function weight(risk) {
-  if (risk === "high") return 3;
-  if (risk === "medium") return 2;
-  if (risk === "low") return 0;
+  if (risk === "high") return 8;
+  if (risk === "medium") return 4;
   return 0;
 }
 
-// paths que consideramos "bem perigosos" se 200
-const CRITICAL_PATHS = [
-  "/admin",
-  "/login",
-  "/dashboard",
-  "/control",
-  "/actuator/info",
-  "/temp",
-  "/sistema",
-  "/wp-admin",
-  "/wp-login.php",
-  "/test"
-];
+export function computeRiskScore(httpInfo, headers, tls, paths, cors, cves) {
+  // ===============================
+  // 1) Cabeçalhos (até 40)
+  // ===============================
+  const headersScore = Math.min(
+    40,
+    headers.reduce((acc, h) => acc + weight(h.risk), 0)
+  );
 
-export function computeRiskScore(httpInfo, headerResults, tlsResult, pathsResults) {
-  let points = 0;
-  let maxPoints = 1; // evita divisão por zero
+  // ===============================
+  // 2) Caminhos Sensíveis (até 40)
+  // ===============================
+  const pathsScore = Math.min(
+    40,
+    paths.reduce((acc, p) => acc + weight(p.risk), 0)
+  );
 
-  // 1) Cabeçalhos
-  for (const h of headerResults) {
-    maxPoints += 3;
-    points += weight(h.risk);
-  }
+  // ===============================
+  // 3) TLS (até 20)
+  // ===============================
+  let tlsScore = 0;
+  if (tls && tls.risk === "high") tlsScore = 20;
+  else if (tls && tls.risk === "medium") tlsScore = 10;
 
-  // 2) TLS
-  if (tlsResult && tlsResult.ok) {
-    maxPoints += 3;
-    if (tlsResult.risk === "high") points += 3;
-    else if (tlsResult.risk === "medium") points += 1;
-  }
+  // ===============================
+  // 4) CORS (até 10)
+  // ===============================
+  let corsScore = 0;
+  if (cors && cors.risk === "high") corsScore = 10;
 
-  // 3) Caminhos sensíveis
-  for (const p of pathsResults) {
-    // só consideramos quando retornou algo
-    if (p.status === 200) {
-      maxPoints += 3;
-      const isCritical = CRITICAL_PATHS.includes(p.path);
-      points += isCritical ? 3 : 2;
-    } else if (p.status === 401 || p.status === 403) {
-      maxPoints += 1; // protegido conta a favor, não contra
-    }
-  }
+  // ===============================
+  // 5) CVEs (até 20)
+  // ===============================
+  let cveScore = 0;
+  if (cves && cves.risk === "high") cveScore = 20;
+  else if (cves && cves.risk === "medium") cveScore = 10;
 
-  // Normaliza para 0–100 (quanto mais pontos, pior)
-  const normalized = Math.min(100, Math.round((points / maxPoints) * 100));
+  // ===============================
+  // SCORE FINAL
+  // ===============================
+  let score = headersScore + pathsScore + tlsScore + corsScore + cveScore;
+  score = Math.min(score, 100);
 
-  // Define nível
+  // ===============================
+  // NÍVEL
+  // ===============================
   let level = "low";
-  if (normalized >= 70) level = "high";
-  else if (normalized >= 40) level = "medium";
+  if (score >= 60) level = "high";
+  else if (score >= 30) level = "medium";
 
   return {
-    score: normalized,
+    score,
     level,
-    details: {
-      rawPoints: points,
-      maxPoints
+    breakdown: {
+      headers: headersScore,
+      paths: pathsScore,
+      tls: tlsScore,
+      cors: corsScore,
+      cves: cveScore
     }
   };
 }

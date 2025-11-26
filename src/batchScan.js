@@ -3,6 +3,9 @@ import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
 
+import { scanCves } from "./cveScanner.js";
+
+
 import { httpGet } from "./httpClient.js";
 import { analyzeHeaders } from "./headerScanner.js";
 import { scanTls } from "./tlsScanner.js";
@@ -10,98 +13,125 @@ import { scanSensitivePaths } from "./sensitivePathsScanner.js";
 import { computeRiskScore } from "./riskScorer.js";
 import { generateHtmlReport } from "./reportGenerator.js";
 
+import { detectTechnology } from "./techFingerprintScanner.js";
+import { scanCors } from "./corsScanner.js";
+import { hashBody } from "./loginHeuristic.js";
+import { scanSessionCookies } from "./sessionCookieScanner.js";
+import { scanHttpMethods } from "./httpMethodsScanner.js";
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// Escaneia UMA URL
 async function scanOne(target) {
-  const url = target.startsWith("http") ? target : `https://${target}`;
+  const fullTarget = target.startsWith("http")
+    ? target
+    : `https://${target}`;
 
-  console.log(`\n🔎 Escaneando: ${url}`);
+  console.log(`\n🔎 Iniciando scan em: ${fullTarget}`);
 
-  // 1. HTTP
-  const httpInfo = await httpGet(url);
+  const urlObj = new URL(fullTarget);
 
-  // 2. Headers
+  // 1) HTTP Básico
+  const httpInfo = await httpGet(fullTarget);
+
+  // 2) Base HTML
+  const baseHtml = httpInfo.body || "";
+  const baseHash = hashBody(baseHtml);
+
+  // 3) Tecnologia + CORS
+  const technology = detectTechnology(httpInfo.headers, baseHtml);
+  const corsResult = scanCors(httpInfo.headers);
+
+  const cveResults = scanCves(technology);
+
+
+  // 4) Cabeçalhos
   const headerResults = httpInfo.ok
     ? analyzeHeaders(httpInfo.headers)
     : [];
 
-  // 3. TLS
-  const tlsResult = await scanTls(url);
+  // 5) TLS
+  const tlsResult = await scanTls(fullTarget);
 
-  // 4. Caminhos sensíveis
-  const pathsResults = await scanSensitivePaths(url);
+  // 6) Caminhos Sensíveis
+  const rawPaths = await scanSensitivePaths(fullTarget);
 
-  // 5. Score de risco
+  const pathsResults = rawPaths.map((p) => {
+    if (p.status === 200 && p.body === baseHtml) {
+      return {
+        ...p,
+        risk: "low",
+        note: "Roteamento genérico (mesma tela base)."
+      };
+    }
+
+    return p;
+  });
+
+  // 7) Cookies de Sessão
+  const sessionCookies = scanSessionCookies(httpInfo.headers);
+
+  // 8) Métodos HTTP
+  const httpMethods = await scanHttpMethods(fullTarget);
+
+  // 9) Score
   const riskSummary = computeRiskScore(
     httpInfo,
     headerResults,
     tlsResult,
-    pathsResults
+    pathsResults,
+    corsResult,
+      cveResults 
   );
 
-  // 6. Resultado final
+  // 10) Resultado Final
   const result = {
-    target: url,
+    target: fullTarget,
     scannedAt: new Date().toISOString(),
     http: httpInfo,
     tls: tlsResult,
     headers: headerResults,
     paths: pathsResults,
+    technology,
+    cors: corsResult,
+    sessionCookies,
+    cves: cveResults,   
+    httpMethods,
     risk: riskSummary
   };
 
-  // 7. Nome do arquivo
-  const hostname = new URL(url).hostname.replace(/[:\\/]/g, "_");
+  // 11) Arquivo de saída
+  const hostname = urlObj.hostname.replace(/[:\\/]/g, "_");
   const timestamp = new Date().toISOString().replace(/[:.]/g, "-");
   const filenameHtml = `scan-${hostname}-${timestamp}.html`;
 
-  // 8. Cria pasta /reports se não existir
   const outputDir = path.join(__dirname, "..", "reports");
-  if (!fs.existsSync(outputDir)) {
-    fs.mkdirSync(outputDir);
-  }
+  if (!fs.existsSync(outputDir)) fs.mkdirSync(outputDir);
 
-  // 9. Gera o HTML
   const htmlPath = path.join(outputDir, filenameHtml);
   generateHtmlReport(result, htmlPath);
 
-  console.log(`✅ Relatório HTML salvo: ./reports/${filenameHtml}`);
+  console.log(`✅ Relatório gerado: ./reports/${filenameHtml}`);
+  console.log(`📊 Score: ${riskSummary.score}/100 | ${riskSummary.level.toUpperCase()}`);
 }
 
-// Execução em lote
 async function main() {
   const urlsFile = path.join(__dirname, "..", "urls.txt");
-
-  if (!fs.existsSync(urlsFile)) {
-    console.error("❌ Arquivo urls.txt não encontrado na raiz do projeto.");
-    process.exit(1);
-  }
 
   const content = fs.readFileSync(urlsFile, "utf-8");
 
   const urls = content
     .split("\n")
     .map((u) => u.trim())
-    .filter((u) => u.length > 0 && !u.startsWith("#"));
-
-  if (urls.length === 0) {
-    console.error("❌ Nenhuma URL encontrada no arquivo urls.txt.");
-    process.exit(1);
-  }
-
-  console.log(`🚀 Iniciando varredura em ${urls.length} URL(s)...`);
+    .filter((u) => u && !u.startsWith("#"));
 
   for (const url of urls) {
     try {
       await scanOne(url);
     } catch (err) {
-      console.error(`❌ Erro ao escanear ${url}:`, err.message);
+      console.error(`❌ Erro no scan de ${url}:`, err.message);
     }
   }
-
-  console.log("\n🎉 Varredura em lote finalizada com sucesso!");
 }
 
 main();
