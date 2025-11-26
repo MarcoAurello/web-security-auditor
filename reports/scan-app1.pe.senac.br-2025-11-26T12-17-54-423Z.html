@@ -1,0 +1,757 @@
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Relatório de Segurança - https://app1.pe.senac.br/servicosgerais/login</title>
+  <style>
+    body { font-family: Arial; background: #f3f4f6; padding: 40px; }
+    .container { max-width: 1100px; margin: auto; background: white; padding: 40px; border-radius: 10px; }
+    h1, h2 { color: #111827; }
+    .box { margin-bottom: 35px; }
+    .low { color: green; font-weight: bold; }
+    .medium { color: orange; font-weight: bold; }
+    .high { color: red; font-weight: bold; }
+    table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+    th, td { border: 1px solid #ccc; padding: 8px; font-size: 14px; }
+    th { background: #e5e7eb; }
+  </style>
+</head>
+<body>
+<div class="container">
+
+  <h1>Relatório Técnico de Segurança da Informação</h1>
+  <p><b>URL:</b> https://app1.pe.senac.br/servicosgerais/login</p>
+  <p><b>Data:</b> 11/26/2025, 9:17:54 AM</p>
+  <p><b>Responsável:</b> Marco Aurellio Machado Nunes – Analista de TI – GTIC</p>
+
+  <div class="box">
+    <h2>1. Score Geral</h2>
+    <p class="high"><b>71/100 — HIGH</b></p>
+  </div>
+
+  <div class="box">
+    <h2>2. Cabeçalhos de Segurança</h2>
+    <table>
+      <tr><th>Header</th><th>Presente</th><th>Risco</th><th>Observação</th></tr>
+      
+    <tr>
+      <td>strict-transport-security</td>
+      <td>Não</td>
+      <td class="medium">MEDIUM</td>
+      <td></td>
+    </tr>
+  
+    <tr>
+      <td>content-security-policy</td>
+      <td>Não</td>
+      <td class="medium">MEDIUM</td>
+      <td></td>
+    </tr>
+  
+    <tr>
+      <td>x-frame-options</td>
+      <td>Não</td>
+      <td class="medium">MEDIUM</td>
+      <td></td>
+    </tr>
+  
+    <tr>
+      <td>x-content-type-options</td>
+      <td>Não</td>
+      <td class="medium">MEDIUM</td>
+      <td></td>
+    </tr>
+  
+    <tr>
+      <td>referrer-policy</td>
+      <td>Não</td>
+      <td class="medium">MEDIUM</td>
+      <td></td>
+    </tr>
+  
+    <tr>
+      <td>permissions-policy</td>
+      <td>Não</td>
+      <td class="medium">MEDIUM</td>
+      <td></td>
+    </tr>
+  
+    <tr>
+      <td>content-security-policy</td>
+      <td>Não</td>
+      <td class="high">HIGH</td>
+      <td>Ausência de CSP aumenta risco de XSS.</td>
+    </tr>
+  
+    <tr>
+      <td>strict-transport-security</td>
+      <td>Não</td>
+      <td class="high">HIGH</td>
+      <td>Sem HSTS, o browser pode aceitar HTTP em vez de HTTPS.</td>
+    </tr>
+  
+    </table>
+  </div>
+
+  <div class="box">
+    <h2>3. Caminhos Sensíveis (com URL completa)</h2>
+    <table>
+      <tr><th>Path</th><th>Status</th><th>Risco</th><th>Observação</th></tr>
+      
+    <tr>
+      <td>
+        /admin<br>
+        <a href="https://app1.pe.senac.br/servicosgerais/login/admin" target="_blank">https://app1.pe.senac.br/servicosgerais/login/admin</a>
+      </td>
+      <td>200</td>
+      <td class="high">HIGH</td>
+      <td>Endpoint sensível acessível (200). Verificar restrição.</td>
+    </tr>
+  
+    <tr>
+      <td>
+        /administrator<br>
+        <a href="https://app1.pe.senac.br/servicosgerais/login/administrator" target="_blank">https://app1.pe.senac.br/servicosgerais/login/administrator</a>
+      </td>
+      <td>200</td>
+      <td class="high">HIGH</td>
+      <td>Endpoint sensível acessível (200). Verificar restrição.</td>
+    </tr>
+  
+    <tr>
+      <td>
+        /login<br>
+        <a href="https://app1.pe.senac.br/servicosgerais/login/login" target="_blank">https://app1.pe.senac.br/servicosgerais/login/login</a>
+      </td>
+      <td>200</td>
+      <td class="high">HIGH</td>
+      <td>Endpoint sensível acessível (200). Verificar restrição.</td>
+    </tr>
+  
+    <tr>
+      <td>
+        /logout<br>
+        <a href="https://app1.pe.senac.br/servicosgerais/login/logout" target="_blank">https://app1.pe.senac.br/servicosgerais/login/logout</a>
+      </td>
+      <td>200</td>
+      <td class="high">HIGH</td>
+      <td>Endpoint sensível acessível (200). Verificar restrição.</td>
+    </tr>
+  
+    <tr>
+      <td>
+        /dashboard<br>
+        <a href="https://app1.pe.senac.br/servicosgerais/login/dashboard" target="_blank">https://app1.pe.senac.br/servicosgerais/login/dashboard</a>
+      </td>
+      <td>200</td>
+      <td class="high">HIGH</td>
+      <td>Endpoint sensível acessível (200). Verificar restrição.</td>
+    </tr>
+  
+    <tr>
+      <td>
+        /control<br>
+        <a href="https://app1.pe.senac.br/servicosgerais/login/control" target="_blank">https://app1.pe.senac.br/servicosgerais/login/control</a>
+      </td>
+      <td>200</td>
+      <td class="high">HIGH</td>
+      <td>Endpoint sensível acessível (200). Verificar restrição.</td>
+    </tr>
+  
+    <tr>
+      <td>
+        /swagger<br>
+        <a href="https://app1.pe.senac.br/servicosgerais/login/swagger" target="_blank">https://app1.pe.senac.br/servicosgerais/login/swagger</a>
+      </td>
+      <td>200</td>
+      <td class="high">HIGH</td>
+      <td>Endpoint sensível acessível (200). Verificar restrição.</td>
+    </tr>
+  
+    <tr>
+      <td>
+        /swagger-ui<br>
+        <a href="https://app1.pe.senac.br/servicosgerais/login/swagger-ui" target="_blank">https://app1.pe.senac.br/servicosgerais/login/swagger-ui</a>
+      </td>
+      <td>200</td>
+      <td class="high">HIGH</td>
+      <td>Endpoint sensível acessível (200). Verificar restrição.</td>
+    </tr>
+  
+    <tr>
+      <td>
+        /swagger-ui.html<br>
+        <a href="https://app1.pe.senac.br/servicosgerais/login/swagger-ui.html" target="_blank">https://app1.pe.senac.br/servicosgerais/login/swagger-ui.html</a>
+      </td>
+      <td>200</td>
+      <td class="high">HIGH</td>
+      <td>Endpoint sensível acessível (200). Verificar restrição.</td>
+    </tr>
+  
+    <tr>
+      <td>
+        /v2/api-docs<br>
+        <a href="https://app1.pe.senac.br/servicosgerais/login/v2/api-docs" target="_blank">https://app1.pe.senac.br/servicosgerais/login/v2/api-docs</a>
+      </td>
+      <td>200</td>
+      <td class="high">HIGH</td>
+      <td>Endpoint sensível acessível (200). Verificar restrição.</td>
+    </tr>
+  
+    <tr>
+      <td>
+        /v3/api-docs<br>
+        <a href="https://app1.pe.senac.br/servicosgerais/login/v3/api-docs" target="_blank">https://app1.pe.senac.br/servicosgerais/login/v3/api-docs</a>
+      </td>
+      <td>200</td>
+      <td class="high">HIGH</td>
+      <td>Endpoint sensível acessível (200). Verificar restrição.</td>
+    </tr>
+  
+    <tr>
+      <td>
+        /api-docs<br>
+        <a href="https://app1.pe.senac.br/servicosgerais/login/api-docs" target="_blank">https://app1.pe.senac.br/servicosgerais/login/api-docs</a>
+      </td>
+      <td>200</td>
+      <td class="high">HIGH</td>
+      <td>Endpoint sensível acessível (200). Verificar restrição.</td>
+    </tr>
+  
+    <tr>
+      <td>
+        /openapi<br>
+        <a href="https://app1.pe.senac.br/servicosgerais/login/openapi" target="_blank">https://app1.pe.senac.br/servicosgerais/login/openapi</a>
+      </td>
+      <td>200</td>
+      <td class="high">HIGH</td>
+      <td>Endpoint sensível acessível (200). Verificar restrição.</td>
+    </tr>
+  
+    <tr>
+      <td>
+        /openapi.json<br>
+        <a href="https://app1.pe.senac.br/servicosgerais/login/openapi.json" target="_blank">https://app1.pe.senac.br/servicosgerais/login/openapi.json</a>
+      </td>
+      <td>200</td>
+      <td class="high">HIGH</td>
+      <td>Endpoint sensível acessível (200). Verificar restrição.</td>
+    </tr>
+  
+    <tr>
+      <td>
+        /redoc<br>
+        <a href="https://app1.pe.senac.br/servicosgerais/login/redoc" target="_blank">https://app1.pe.senac.br/servicosgerais/login/redoc</a>
+      </td>
+      <td>200</td>
+      <td class="high">HIGH</td>
+      <td>Endpoint sensível acessível (200). Verificar restrição.</td>
+    </tr>
+  
+    <tr>
+      <td>
+        /actuator<br>
+        <a href="https://app1.pe.senac.br/servicosgerais/login/actuator" target="_blank">https://app1.pe.senac.br/servicosgerais/login/actuator</a>
+      </td>
+      <td>200</td>
+      <td class="high">HIGH</td>
+      <td>Endpoint sensível acessível (200). Verificar restrição.</td>
+    </tr>
+  
+    <tr>
+      <td>
+        /actuator/health<br>
+        <a href="https://app1.pe.senac.br/servicosgerais/login/actuator/health" target="_blank">https://app1.pe.senac.br/servicosgerais/login/actuator/health</a>
+      </td>
+      <td>200</td>
+      <td class="high">HIGH</td>
+      <td>Endpoint sensível acessível (200). Verificar restrição.</td>
+    </tr>
+  
+    <tr>
+      <td>
+        /actuator/info<br>
+        <a href="https://app1.pe.senac.br/servicosgerais/login/actuator/info" target="_blank">https://app1.pe.senac.br/servicosgerais/login/actuator/info</a>
+      </td>
+      <td>200</td>
+      <td class="high">HIGH</td>
+      <td>Endpoint sensível acessível (200). Verificar restrição.</td>
+    </tr>
+  
+    <tr>
+      <td>
+        /actuator/env<br>
+        <a href="https://app1.pe.senac.br/servicosgerais/login/actuator/env" target="_blank">https://app1.pe.senac.br/servicosgerais/login/actuator/env</a>
+      </td>
+      <td>200</td>
+      <td class="high">HIGH</td>
+      <td>Endpoint sensível acessível (200). Verificar restrição.</td>
+    </tr>
+  
+    <tr>
+      <td>
+        /config<br>
+        <a href="https://app1.pe.senac.br/servicosgerais/login/config" target="_blank">https://app1.pe.senac.br/servicosgerais/login/config</a>
+      </td>
+      <td>200</td>
+      <td class="high">HIGH</td>
+      <td>Endpoint sensível acessível (200). Verificar restrição.</td>
+    </tr>
+  
+    <tr>
+      <td>
+        /configs<br>
+        <a href="https://app1.pe.senac.br/servicosgerais/login/configs" target="_blank">https://app1.pe.senac.br/servicosgerais/login/configs</a>
+      </td>
+      <td>200</td>
+      <td class="high">HIGH</td>
+      <td>Endpoint sensível acessível (200). Verificar restrição.</td>
+    </tr>
+  
+    <tr>
+      <td>
+        /config.json<br>
+        <a href="https://app1.pe.senac.br/servicosgerais/login/config.json" target="_blank">https://app1.pe.senac.br/servicosgerais/login/config.json</a>
+      </td>
+      <td>200</td>
+      <td class="high">HIGH</td>
+      <td>Endpoint sensível acessível (200). Verificar restrição.</td>
+    </tr>
+  
+    <tr>
+      <td>
+        /settings<br>
+        <a href="https://app1.pe.senac.br/servicosgerais/login/settings" target="_blank">https://app1.pe.senac.br/servicosgerais/login/settings</a>
+      </td>
+      <td>200</td>
+      <td class="high">HIGH</td>
+      <td>Endpoint sensível acessível (200). Verificar restrição.</td>
+    </tr>
+  
+    <tr>
+      <td>
+        /settings.json<br>
+        <a href="https://app1.pe.senac.br/servicosgerais/login/settings.json" target="_blank">https://app1.pe.senac.br/servicosgerais/login/settings.json</a>
+      </td>
+      <td>200</td>
+      <td class="high">HIGH</td>
+      <td>Endpoint sensível acessível (200). Verificar restrição.</td>
+    </tr>
+  
+    <tr>
+      <td>
+        /.env<br>
+        <a href="https://app1.pe.senac.br/servicosgerais/login/.env" target="_blank">https://app1.pe.senac.br/servicosgerais/login/.env</a>
+      </td>
+      <td>200</td>
+      <td class="high">HIGH</td>
+      <td>Endpoint sensível acessível (200). Verificar restrição.</td>
+    </tr>
+  
+    <tr>
+      <td>
+        /.git<br>
+        <a href="https://app1.pe.senac.br/servicosgerais/login/.git" target="_blank">https://app1.pe.senac.br/servicosgerais/login/.git</a>
+      </td>
+      <td>200</td>
+      <td class="high">HIGH</td>
+      <td>Endpoint sensível acessível (200). Verificar restrição.</td>
+    </tr>
+  
+    <tr>
+      <td>
+        /backup<br>
+        <a href="https://app1.pe.senac.br/servicosgerais/login/backup" target="_blank">https://app1.pe.senac.br/servicosgerais/login/backup</a>
+      </td>
+      <td>200</td>
+      <td class="high">HIGH</td>
+      <td>Endpoint sensível acessível (200). Verificar restrição.</td>
+    </tr>
+  
+    <tr>
+      <td>
+        /backup.zip<br>
+        <a href="https://app1.pe.senac.br/servicosgerais/login/backup.zip" target="_blank">https://app1.pe.senac.br/servicosgerais/login/backup.zip</a>
+      </td>
+      <td>200</td>
+      <td class="high">HIGH</td>
+      <td>Endpoint sensível acessível (200). Verificar restrição.</td>
+    </tr>
+  
+    <tr>
+      <td>
+        /backup.tar<br>
+        <a href="https://app1.pe.senac.br/servicosgerais/login/backup.tar" target="_blank">https://app1.pe.senac.br/servicosgerais/login/backup.tar</a>
+      </td>
+      <td>200</td>
+      <td class="high">HIGH</td>
+      <td>Endpoint sensível acessível (200). Verificar restrição.</td>
+    </tr>
+  
+    <tr>
+      <td>
+        /backup.sql<br>
+        <a href="https://app1.pe.senac.br/servicosgerais/login/backup.sql" target="_blank">https://app1.pe.senac.br/servicosgerais/login/backup.sql</a>
+      </td>
+      <td>200</td>
+      <td class="high">HIGH</td>
+      <td>Endpoint sensível acessível (200). Verificar restrição.</td>
+    </tr>
+  
+    <tr>
+      <td>
+        /db.sql<br>
+        <a href="https://app1.pe.senac.br/servicosgerais/login/db.sql" target="_blank">https://app1.pe.senac.br/servicosgerais/login/db.sql</a>
+      </td>
+      <td>200</td>
+      <td class="high">HIGH</td>
+      <td>Endpoint sensível acessível (200). Verificar restrição.</td>
+    </tr>
+  
+    <tr>
+      <td>
+        /dump.sql<br>
+        <a href="https://app1.pe.senac.br/servicosgerais/login/dump.sql" target="_blank">https://app1.pe.senac.br/servicosgerais/login/dump.sql</a>
+      </td>
+      <td>200</td>
+      <td class="high">HIGH</td>
+      <td>Endpoint sensível acessível (200). Verificar restrição.</td>
+    </tr>
+  
+    <tr>
+      <td>
+        /database.sql<br>
+        <a href="https://app1.pe.senac.br/servicosgerais/login/database.sql" target="_blank">https://app1.pe.senac.br/servicosgerais/login/database.sql</a>
+      </td>
+      <td>200</td>
+      <td class="high">HIGH</td>
+      <td>Endpoint sensível acessível (200). Verificar restrição.</td>
+    </tr>
+  
+    <tr>
+      <td>
+        /phpinfo.php<br>
+        <a href="https://app1.pe.senac.br/servicosgerais/login/phpinfo.php" target="_blank">https://app1.pe.senac.br/servicosgerais/login/phpinfo.php</a>
+      </td>
+      <td>200</td>
+      <td class="high">HIGH</td>
+      <td>Endpoint sensível acessível (200). Verificar restrição.</td>
+    </tr>
+  
+    <tr>
+      <td>
+        /server-status<br>
+        <a href="https://app1.pe.senac.br/servicosgerais/login/server-status" target="_blank">https://app1.pe.senac.br/servicosgerais/login/server-status</a>
+      </td>
+      <td>200</td>
+      <td class="high">HIGH</td>
+      <td>Endpoint sensível acessível (200). Verificar restrição.</td>
+    </tr>
+  
+    <tr>
+      <td>
+        /upload<br>
+        <a href="https://app1.pe.senac.br/servicosgerais/login/upload" target="_blank">https://app1.pe.senac.br/servicosgerais/login/upload</a>
+      </td>
+      <td>200</td>
+      <td class="high">HIGH</td>
+      <td>Endpoint sensível acessível (200). Verificar restrição.</td>
+    </tr>
+  
+    <tr>
+      <td>
+        /uploads<br>
+        <a href="https://app1.pe.senac.br/servicosgerais/login/uploads" target="_blank">https://app1.pe.senac.br/servicosgerais/login/uploads</a>
+      </td>
+      <td>200</td>
+      <td class="high">HIGH</td>
+      <td>Endpoint sensível acessível (200). Verificar restrição.</td>
+    </tr>
+  
+    <tr>
+      <td>
+        /files<br>
+        <a href="https://app1.pe.senac.br/servicosgerais/login/files" target="_blank">https://app1.pe.senac.br/servicosgerais/login/files</a>
+      </td>
+      <td>200</td>
+      <td class="high">HIGH</td>
+      <td>Endpoint sensível acessível (200). Verificar restrição.</td>
+    </tr>
+  
+    <tr>
+      <td>
+        /tmp<br>
+        <a href="https://app1.pe.senac.br/servicosgerais/login/tmp" target="_blank">https://app1.pe.senac.br/servicosgerais/login/tmp</a>
+      </td>
+      <td>200</td>
+      <td class="high">HIGH</td>
+      <td>Endpoint sensível acessível (200). Verificar restrição.</td>
+    </tr>
+  
+    <tr>
+      <td>
+        /temp<br>
+        <a href="https://app1.pe.senac.br/servicosgerais/login/temp" target="_blank">https://app1.pe.senac.br/servicosgerais/login/temp</a>
+      </td>
+      <td>200</td>
+      <td class="high">HIGH</td>
+      <td>Endpoint sensível acessível (200). Verificar restrição.</td>
+    </tr>
+  
+    <tr>
+      <td>
+        /auth<br>
+        <a href="https://app1.pe.senac.br/servicosgerais/login/auth" target="_blank">https://app1.pe.senac.br/servicosgerais/login/auth</a>
+      </td>
+      <td>200</td>
+      <td class="high">HIGH</td>
+      <td>Endpoint sensível acessível (200). Verificar restrição.</td>
+    </tr>
+  
+    <tr>
+      <td>
+        /oauth<br>
+        <a href="https://app1.pe.senac.br/servicosgerais/login/oauth" target="_blank">https://app1.pe.senac.br/servicosgerais/login/oauth</a>
+      </td>
+      <td>200</td>
+      <td class="high">HIGH</td>
+      <td>Endpoint sensível acessível (200). Verificar restrição.</td>
+    </tr>
+  
+    <tr>
+      <td>
+        /sisadmin<br>
+        <a href="https://app1.pe.senac.br/servicosgerais/login/sisadmin" target="_blank">https://app1.pe.senac.br/servicosgerais/login/sisadmin</a>
+      </td>
+      <td>200</td>
+      <td class="high">HIGH</td>
+      <td>Endpoint sensível acessível (200). Verificar restrição.</td>
+    </tr>
+  
+    <tr>
+      <td>
+        /sistema<br>
+        <a href="https://app1.pe.senac.br/servicosgerais/login/sistema" target="_blank">https://app1.pe.senac.br/servicosgerais/login/sistema</a>
+      </td>
+      <td>200</td>
+      <td class="high">HIGH</td>
+      <td>Endpoint sensível acessível (200). Verificar restrição.</td>
+    </tr>
+  
+    <tr>
+      <td>
+        /interno<br>
+        <a href="https://app1.pe.senac.br/servicosgerais/login/interno" target="_blank">https://app1.pe.senac.br/servicosgerais/login/interno</a>
+      </td>
+      <td>200</td>
+      <td class="high">HIGH</td>
+      <td>Endpoint sensível acessível (200). Verificar restrição.</td>
+    </tr>
+  
+    <tr>
+      <td>
+        /privado<br>
+        <a href="https://app1.pe.senac.br/servicosgerais/login/privado" target="_blank">https://app1.pe.senac.br/servicosgerais/login/privado</a>
+      </td>
+      <td>200</td>
+      <td class="high">HIGH</td>
+      <td>Endpoint sensível acessível (200). Verificar restrição.</td>
+    </tr>
+  
+    <tr>
+      <td>
+        /docker<br>
+        <a href="https://app1.pe.senac.br/servicosgerais/login/docker" target="_blank">https://app1.pe.senac.br/servicosgerais/login/docker</a>
+      </td>
+      <td>200</td>
+      <td class="high">HIGH</td>
+      <td>Endpoint sensível acessível (200). Verificar restrição.</td>
+    </tr>
+  
+    <tr>
+      <td>
+        /kubernetes<br>
+        <a href="https://app1.pe.senac.br/servicosgerais/login/kubernetes" target="_blank">https://app1.pe.senac.br/servicosgerais/login/kubernetes</a>
+      </td>
+      <td>200</td>
+      <td class="high">HIGH</td>
+      <td>Endpoint sensível acessível (200). Verificar restrição.</td>
+    </tr>
+  
+    <tr>
+      <td>
+        /metrics<br>
+        <a href="https://app1.pe.senac.br/servicosgerais/login/metrics" target="_blank">https://app1.pe.senac.br/servicosgerais/login/metrics</a>
+      </td>
+      <td>200</td>
+      <td class="high">HIGH</td>
+      <td>Endpoint sensível acessível (200). Verificar restrição.</td>
+    </tr>
+  
+    <tr>
+      <td>
+        /monitor<br>
+        <a href="https://app1.pe.senac.br/servicosgerais/login/monitor" target="_blank">https://app1.pe.senac.br/servicosgerais/login/monitor</a>
+      </td>
+      <td>200</td>
+      <td class="high">HIGH</td>
+      <td>Endpoint sensível acessível (200). Verificar restrição.</td>
+    </tr>
+  
+    <tr>
+      <td>
+        /status<br>
+        <a href="https://app1.pe.senac.br/servicosgerais/login/status" target="_blank">https://app1.pe.senac.br/servicosgerais/login/status</a>
+      </td>
+      <td>200</td>
+      <td class="high">HIGH</td>
+      <td>Endpoint sensível acessível (200). Verificar restrição.</td>
+    </tr>
+  
+    <tr>
+      <td>
+        /health<br>
+        <a href="https://app1.pe.senac.br/servicosgerais/login/health" target="_blank">https://app1.pe.senac.br/servicosgerais/login/health</a>
+      </td>
+      <td>200</td>
+      <td class="high">HIGH</td>
+      <td>Endpoint sensível acessível (200). Verificar restrição.</td>
+    </tr>
+  
+    <tr>
+      <td>
+        /ping<br>
+        <a href="https://app1.pe.senac.br/servicosgerais/login/ping" target="_blank">https://app1.pe.senac.br/servicosgerais/login/ping</a>
+      </td>
+      <td>200</td>
+      <td class="high">HIGH</td>
+      <td>Endpoint sensível acessível (200). Verificar restrição.</td>
+    </tr>
+  
+    <tr>
+      <td>
+        /wp-admin<br>
+        <a href="https://app1.pe.senac.br/servicosgerais/login/wp-admin" target="_blank">https://app1.pe.senac.br/servicosgerais/login/wp-admin</a>
+      </td>
+      <td>200</td>
+      <td class="high">HIGH</td>
+      <td>Endpoint sensível acessível (200). Verificar restrição.</td>
+    </tr>
+  
+    <tr>
+      <td>
+        /wp-login.php<br>
+        <a href="https://app1.pe.senac.br/servicosgerais/login/wp-login.php" target="_blank">https://app1.pe.senac.br/servicosgerais/login/wp-login.php</a>
+      </td>
+      <td>200</td>
+      <td class="high">HIGH</td>
+      <td>Endpoint sensível acessível (200). Verificar restrição.</td>
+    </tr>
+  
+    <tr>
+      <td>
+        /xmlrpc.php<br>
+        <a href="https://app1.pe.senac.br/servicosgerais/login/xmlrpc.php" target="_blank">https://app1.pe.senac.br/servicosgerais/login/xmlrpc.php</a>
+      </td>
+      <td>200</td>
+      <td class="high">HIGH</td>
+      <td>Endpoint sensível acessível (200). Verificar restrição.</td>
+    </tr>
+  
+    <tr>
+      <td>
+        /test<br>
+        <a href="https://app1.pe.senac.br/servicosgerais/login/test" target="_blank">https://app1.pe.senac.br/servicosgerais/login/test</a>
+      </td>
+      <td>200</td>
+      <td class="high">HIGH</td>
+      <td>Endpoint sensível acessível (200). Verificar restrição.</td>
+    </tr>
+  
+    <tr>
+      <td>
+        /tests<br>
+        <a href="https://app1.pe.senac.br/servicosgerais/login/tests" target="_blank">https://app1.pe.senac.br/servicosgerais/login/tests</a>
+      </td>
+      <td>200</td>
+      <td class="high">HIGH</td>
+      <td>Endpoint sensível acessível (200). Verificar restrição.</td>
+    </tr>
+  
+    <tr>
+      <td>
+        /qa<br>
+        <a href="https://app1.pe.senac.br/servicosgerais/login/qa" target="_blank">https://app1.pe.senac.br/servicosgerais/login/qa</a>
+      </td>
+      <td>200</td>
+      <td class="high">HIGH</td>
+      <td>Endpoint sensível acessível (200). Verificar restrição.</td>
+    </tr>
+  
+    <tr>
+      <td>
+        /homolog<br>
+        <a href="https://app1.pe.senac.br/servicosgerais/login/homolog" target="_blank">https://app1.pe.senac.br/servicosgerais/login/homolog</a>
+      </td>
+      <td>200</td>
+      <td class="high">HIGH</td>
+      <td>Endpoint sensível acessível (200). Verificar restrição.</td>
+    </tr>
+  
+    <tr>
+      <td>
+        /homologacao<br>
+        <a href="https://app1.pe.senac.br/servicosgerais/login/homologacao" target="_blank">https://app1.pe.senac.br/servicosgerais/login/homologacao</a>
+      </td>
+      <td>200</td>
+      <td class="high">HIGH</td>
+      <td>Endpoint sensível acessível (200). Verificar restrição.</td>
+    </tr>
+  
+    </table>
+  </div>
+
+  <div class="box">
+    <h2>4. Mapeamento OWASP (Automático)</h2>
+    <table>
+      <tr><th>Categoria</th><th>Evidência</th></tr>
+      
+    <tr>
+      <td>A05 - Security Misconfiguration</td>
+      <td>Ausência ou falha em cabeçalhos de segurança.</td>
+    </tr>
+  
+    <tr>
+      <td>A01 - Broken Access Control</td>
+      <td>Endpoints administrativos acessíveis publicamente (HTTP 200).</td>
+    </tr>
+  
+    <tr>
+      <td>A05 - Security Misconfiguration</td>
+      <td>Endpoints Spring Boot Actuator expostos.</td>
+    </tr>
+  
+    <tr>
+      <td>A06 - Vulnerable and Outdated Components</td>
+      <td>Indícios de WordPress público.</td>
+    </tr>
+  
+    </table>
+  </div>
+
+  <div class="box">
+    <h2>5. Recomendações Técnicas Automáticas</h2>
+    <ul>
+      <li>Implementar imediatamente o header Content-Security-Policy (CSP).</li><li>Ativar o header Strict-Transport-Security (HSTS).</li><li>Restringir acesso público ao endpoint: https://app1.pe.senac.br/servicosgerais/login/admin</li><li>Restringir acesso público ao endpoint: https://app1.pe.senac.br/servicosgerais/login/administrator</li><li>Restringir acesso público ao endpoint: https://app1.pe.senac.br/servicosgerais/login/login</li><li>Restringir acesso público ao endpoint: https://app1.pe.senac.br/servicosgerais/login/logout</li><li>Restringir acesso público ao endpoint: https://app1.pe.senac.br/servicosgerais/login/dashboard</li><li>Restringir acesso público ao endpoint: https://app1.pe.senac.br/servicosgerais/login/control</li><li>Restringir acesso público ao endpoint: https://app1.pe.senac.br/servicosgerais/login/swagger</li><li>Restringir acesso público ao endpoint: https://app1.pe.senac.br/servicosgerais/login/swagger-ui</li><li>Restringir acesso público ao endpoint: https://app1.pe.senac.br/servicosgerais/login/swagger-ui.html</li><li>Restringir acesso público ao endpoint: https://app1.pe.senac.br/servicosgerais/login/v2/api-docs</li><li>Restringir acesso público ao endpoint: https://app1.pe.senac.br/servicosgerais/login/v3/api-docs</li><li>Restringir acesso público ao endpoint: https://app1.pe.senac.br/servicosgerais/login/api-docs</li><li>Restringir acesso público ao endpoint: https://app1.pe.senac.br/servicosgerais/login/openapi</li><li>Restringir acesso público ao endpoint: https://app1.pe.senac.br/servicosgerais/login/openapi.json</li><li>Restringir acesso público ao endpoint: https://app1.pe.senac.br/servicosgerais/login/redoc</li><li>Restringir acesso público ao endpoint: https://app1.pe.senac.br/servicosgerais/login/actuator</li><li>Restringir acesso público ao endpoint: https://app1.pe.senac.br/servicosgerais/login/actuator/health</li><li>Restringir acesso público ao endpoint: https://app1.pe.senac.br/servicosgerais/login/actuator/info</li><li>Restringir acesso público ao endpoint: https://app1.pe.senac.br/servicosgerais/login/actuator/env</li><li>Restringir acesso público ao endpoint: https://app1.pe.senac.br/servicosgerais/login/config</li><li>Restringir acesso público ao endpoint: https://app1.pe.senac.br/servicosgerais/login/configs</li><li>Restringir acesso público ao endpoint: https://app1.pe.senac.br/servicosgerais/login/config.json</li><li>Restringir acesso público ao endpoint: https://app1.pe.senac.br/servicosgerais/login/settings</li><li>Restringir acesso público ao endpoint: https://app1.pe.senac.br/servicosgerais/login/settings.json</li><li>Restringir acesso público ao endpoint: https://app1.pe.senac.br/servicosgerais/login/.env</li><li>Restringir acesso público ao endpoint: https://app1.pe.senac.br/servicosgerais/login/.git</li><li>Restringir acesso público ao endpoint: https://app1.pe.senac.br/servicosgerais/login/backup</li><li>Restringir acesso público ao endpoint: https://app1.pe.senac.br/servicosgerais/login/backup.zip</li><li>Restringir acesso público ao endpoint: https://app1.pe.senac.br/servicosgerais/login/backup.tar</li><li>Restringir acesso público ao endpoint: https://app1.pe.senac.br/servicosgerais/login/backup.sql</li><li>Restringir acesso público ao endpoint: https://app1.pe.senac.br/servicosgerais/login/db.sql</li><li>Restringir acesso público ao endpoint: https://app1.pe.senac.br/servicosgerais/login/dump.sql</li><li>Restringir acesso público ao endpoint: https://app1.pe.senac.br/servicosgerais/login/database.sql</li><li>Restringir acesso público ao endpoint: https://app1.pe.senac.br/servicosgerais/login/phpinfo.php</li><li>Restringir acesso público ao endpoint: https://app1.pe.senac.br/servicosgerais/login/server-status</li><li>Restringir acesso público ao endpoint: https://app1.pe.senac.br/servicosgerais/login/upload</li><li>Restringir acesso público ao endpoint: https://app1.pe.senac.br/servicosgerais/login/uploads</li><li>Restringir acesso público ao endpoint: https://app1.pe.senac.br/servicosgerais/login/files</li><li>Restringir acesso público ao endpoint: https://app1.pe.senac.br/servicosgerais/login/tmp</li><li>Restringir acesso público ao endpoint: https://app1.pe.senac.br/servicosgerais/login/temp</li><li>Restringir acesso público ao endpoint: https://app1.pe.senac.br/servicosgerais/login/auth</li><li>Restringir acesso público ao endpoint: https://app1.pe.senac.br/servicosgerais/login/oauth</li><li>Restringir acesso público ao endpoint: https://app1.pe.senac.br/servicosgerais/login/sisadmin</li><li>Restringir acesso público ao endpoint: https://app1.pe.senac.br/servicosgerais/login/sistema</li><li>Restringir acesso público ao endpoint: https://app1.pe.senac.br/servicosgerais/login/interno</li><li>Restringir acesso público ao endpoint: https://app1.pe.senac.br/servicosgerais/login/privado</li><li>Restringir acesso público ao endpoint: https://app1.pe.senac.br/servicosgerais/login/docker</li><li>Restringir acesso público ao endpoint: https://app1.pe.senac.br/servicosgerais/login/kubernetes</li><li>Restringir acesso público ao endpoint: https://app1.pe.senac.br/servicosgerais/login/metrics</li><li>Restringir acesso público ao endpoint: https://app1.pe.senac.br/servicosgerais/login/monitor</li><li>Restringir acesso público ao endpoint: https://app1.pe.senac.br/servicosgerais/login/status</li><li>Restringir acesso público ao endpoint: https://app1.pe.senac.br/servicosgerais/login/health</li><li>Restringir acesso público ao endpoint: https://app1.pe.senac.br/servicosgerais/login/ping</li><li>Restringir acesso público ao endpoint: https://app1.pe.senac.br/servicosgerais/login/wp-admin</li><li>Restringir acesso público ao endpoint: https://app1.pe.senac.br/servicosgerais/login/wp-login.php</li><li>Restringir acesso público ao endpoint: https://app1.pe.senac.br/servicosgerais/login/xmlrpc.php</li><li>Restringir acesso público ao endpoint: https://app1.pe.senac.br/servicosgerais/login/test</li><li>Restringir acesso público ao endpoint: https://app1.pe.senac.br/servicosgerais/login/tests</li><li>Restringir acesso público ao endpoint: https://app1.pe.senac.br/servicosgerais/login/qa</li><li>Restringir acesso público ao endpoint: https://app1.pe.senac.br/servicosgerais/login/homolog</li><li>Restringir acesso público ao endpoint: https://app1.pe.senac.br/servicosgerais/login/homologacao</li>
+    </ul>
+  </div>
+
+  <div class="box">
+    <h2>6. Conclusão</h2>
+    <p>O sistema apresenta RISCO ALTO, com múltiplos endpoints acessíveis publicamente: /admin, /administrator, /login, /logout, /dashboard, /control, /swagger, /swagger-ui, /swagger-ui.html, /v2/api-docs, /v3/api-docs, /api-docs, /openapi, /openapi.json, /redoc, /actuator, /actuator/health, /actuator/info, /actuator/env, /config, /configs, /config.json, /settings, /settings.json, /.env, /.git, /backup, /backup.zip, /backup.tar, /backup.sql, /db.sql, /dump.sql, /database.sql, /phpinfo.php, /server-status, /upload, /uploads, /files, /tmp, /temp, /auth, /oauth, /sisadmin, /sistema, /interno, /privado, /docker, /kubernetes, /metrics, /monitor, /status, /health, /ping, /wp-admin, /wp-login.php, /xmlrpc.php, /test, /tests, /qa, /homolog, /homologacao. Recomenda-se mitigação imediata.</p>
+  </div>
+
+</div>
+</body>
+</html>

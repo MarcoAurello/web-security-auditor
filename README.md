@@ -185,6 +185,58 @@ Cada varredura gera um relatório contendo:
 
 ------------------------------------------------------------------------
 
+## 🗂️ Responsabilidade de cada arquivo
+
+🔹 index.js
+
+Arquivo principal para execução do scanner em uma única URL. Orquestra todas as etapas da varredura: conexão HTTP, análise de cabeçalhos de segurança, verificação do certificado TLS, varredura de caminhos sensíveis, cálculo do score de risco e geração do relatório final.
+
+🔹 batchScan.js
+
+Responsável pela execução do scanner em lote. Lê uma lista de URLs a partir do arquivo urls.txt, realiza a varredura em cada sistema sequencialmente e gera um relatório HTML individual para cada URL, automatizando auditorias em múltiplos sistemas.
+
+🔹 httpClient.js
+
+Implementa o cliente HTTP/HTTPS da aplicação, utilizando Axios. É responsável por realizar as requisições aos sistemas avaliados, medir tempo de resposta, capturar status HTTP e, quando em ambiente de homologação, permitir a conexão mesmo com validação SSL flexível.
+
+🔹 headerScanner.js
+
+Módulo responsável por analisar os cabeçalhos de segurança HTTP retornados pelo servidor, verificando a presença e o nível de risco de políticas como CSP, HSTS, X-Frame-Options, X-Content-Type-Options, Referrer-Policy e Permissions-Policy.
+
+🔹 tlsScanner.js
+
+Executa a análise do certificado digital TLS/HTTPS do servidor, coletando informações como emissor, validade, dias restantes para expiração e classificando automaticamente o nível de risco criptográfico.
+
+🔹 sensitivePathsScanner.js
+
+Realiza a enumeração automatizada de caminhos sensíveis e administrativos conhecidos, testando endpoints como /admin, /login, /actuator, /wp-admin, /temp, entre outros. Classifica automaticamente o risco conforme o status HTTP retornado e registra a URL completa acessada.
+
+🔹 riskScorer.js
+
+Responsável pelo cálculo automático do score geral de risco (0 a 100) do sistema avaliado, correlacionando:
+
+falhas nos cabeçalhos de segurança,
+
+exposição de endpoints sensíveis,
+
+risco do certificado TLS.
+
+Também define o nível de severidade global (baixo, médio ou alto).
+
+🔹 reportGenerator.js
+
+Gera automaticamente o relatório técnico em HTML, consolidando todos os dados da varredura: score de risco, headers, caminhos sensíveis com URL completa, mapeamento OWASP, recomendações técnicas dinâmicas e conclusão baseada nos achados reais.
+
+🔹 urls.txt
+
+Arquivo de configuração da varredura em lote, contendo a lista de URLs que serão auditadas automaticamente pelo batchScan.js.
+
+🔹 Pasta reports/
+
+Diretório onde são armazenados todos os relatórios HTML gerados automaticamente pela ferramenta, um para cada sistema avaliado.
+
+------------------------------------------------------------------------
+
 ## 🔐 Uso Responsável
 
 ⚠️ **Esta ferramenta é EXCLUSIVAMENTE para uso autorizado.**
